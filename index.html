@@ -3,18 +3,13 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./index.css" />
 		<title>Document</title>
 	</head>
 	<body>
-		<div id="root"></div>
-		<div id="root1"></div>
-		<div id="root2"><h1>Hello World!!</h1></div>
-		<script>
-			const heading1 = document.createElement("h1");
-			heading1.innerHTML = "Hello world from JS";
-			const root1 = document.getElementById("root1");
-			root1.appendChild(heading1);
-		</script>
+		<div id="root">
+			<h1>I'm here</h1>
+		</div>
 		<script
 			crossorigin
 			src="https://unpkg.com/react@18/umd/react.development.js"
@@ -23,10 +18,6 @@
 			crossorigin
 			src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
 		></script>
-		<script>
-			const heading = React.createElement("h1", {}, "Hello World from React");
-			const root = ReactDOM.createRoot(document.getElementById("root"));
-			root.render(heading);
-		</script>
+		<script src="./App.js"></script>
 	</body>
 </html>
