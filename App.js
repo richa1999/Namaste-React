@@ -1,3 +1,6 @@
+import React from "react";
+import ReactDOM from "react-dom";
+
 // ResctElement creation without using JSX.
 const heading = React.createElement(
 	"h1",
