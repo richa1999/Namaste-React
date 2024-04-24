@@ -1,3 +1,46 @@
-#heading {
-	color: red;
+.header {
+	display: flex;
+	border: 1px solid #000;
+	justify-content: space-between;
+}
+
+.logo {
+	height: 150px;
+}
+
+.nav-bar > ul{
+	display: flex;
+	list-style: none;
+	font-size: 20px;
+	padding-top: 30px;
+}
+
+.nav-bar > ul > li {
+	margin: 10px;
+	padding: 10px;
+}
+
+.restaurant-card {
+	margin: 5px;
+	padding: 5px;
+	width: 200px;
+}
+
+.restaurant-card:hover{
+	cursor: pointer;
+	border: 1px solid #000;
+}
+
+.restaurant {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.search {
+	padding: 40px;
+}
+
+.res-logo{
+	width: 199px;
+	height: 199px;
 }
