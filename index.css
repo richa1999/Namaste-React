@@ -50,6 +50,7 @@
 .shimmer-wrapper{
 	display: flex;
 	flex-wrap: wrap;
+	padding-left: 70px;
 }
 
 .shimmer-card{
