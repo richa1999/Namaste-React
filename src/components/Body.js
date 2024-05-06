@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 // Whenever state variables update, react triggers a reconcilition cycle(re-renders the component)
 const Body = () => {
@@ -70,7 +71,11 @@ const Body = () => {
       <div className="restaurant">
         {filerRestaurants.map((restaurant) => {
           return (
-            <RestaurantCard key={restaurant.info.id} restaurant={restaurant} />
+            <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}>
+              <RestaurantCard
+                restaurant={restaurant}
+              />
+            </Link>
           );
         })}
       </div>
