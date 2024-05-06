@@ -45,3 +45,17 @@
 	width: 199px;
 	height: 199px;
 }
+
+.shimmer-wrapper{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.shimmer-card{
+	background-color: #f3e7d8;
+	padding: 5px;
+	margin: 5px;
+	padding: 5px;
+	width: 200px;
+	height: 400px;
+}
