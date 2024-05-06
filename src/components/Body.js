@@ -4,6 +4,14 @@ import Shimmer from "./Shimmer";
 
 // Whenever state variables update, react triggers a reconcilition cycle(re-renders the component)
 const Body = () => {
+  // hooks should be called at the top level of the component
+  // hooks should always be put inside the body and not inside any if-else block or outside the component
+  const [listOfRestaurants, setListRestaurants] = useState([]);
+  const [filerRestaurants, setFilerRestaurants] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  // if no dependecy array is provided, useEffect will run on every render
+  // if empty array is provided, useEffect will run only once at initial render
+  // if some state variable is provided, useEffect will run whenever that state variable changes
   useEffect(() => {
     fetchData();
   }, []);
@@ -21,16 +29,12 @@ const Body = () => {
       data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
-  const [listOfRestaurants, setListRestaurants] = useState([]);
-  const [filerRestaurants, setFilerRestaurants] = useState([]);
 
   const onClickHandler = () => {
     setFilerRestaurants(
-        listOfRestaurants.filter((restaurant) => restaurant.info.avgRating > 4.5)
+      listOfRestaurants.filter((restaurant) => restaurant.info.avgRating > 4.5)
     );
   };
-
-  const [searchText, setSearchText] = useState("");
 
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
@@ -44,10 +48,20 @@ const Body = () => {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <button onClick={() => {
-            const filerRestaurants = listOfRestaurants.filter((restaurant) => restaurant.info.name.toLowerCase().includes(searchText.toLowerCase()));
-            filerRestaurants.length !== 0 ? setFilerRestaurants(filerRestaurants) : setFilerRestaurants(listOfRestaurants);
-          }}>Search</button>
+          <button
+            onClick={() => {
+              const filerRestaurants = listOfRestaurants.filter((restaurant) =>
+                restaurant.info.name
+                  .toLowerCase()
+                  .includes(searchText.toLowerCase())
+              );
+              filerRestaurants.length !== 0
+                ? setFilerRestaurants(filerRestaurants)
+                : setFilerRestaurants(listOfRestaurants);
+            }}
+          >
+            Search
+          </button>
         </div>
         <button className="filter" onClick={onClickHandler}>
           Top Rated Restaurants
