@@ -38,7 +38,7 @@
 }
 
 .search {
-	padding: 40px;
+	padding: 10px 20px;
 }
 
 .res-logo{
@@ -58,4 +58,26 @@
 	padding: 5px;
 	width: 200px;
 	height: 400px;
+}
+
+.login {
+	background-color: #aa7b04; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.filter-container{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.filter{
+	margin: 10px;
+	cursor: pointer;
 }
