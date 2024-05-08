@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 // Whenever state variables update, react triggers a reconcilition cycle(re-renders the component)
 const Body = () => {
@@ -33,9 +34,15 @@ const Body = () => {
 
   const onClickHandler = () => {
     setFilerRestaurants(
-      listOfRestaurants.filter((restaurant) => restaurant.info.avgRating > 4.5)
+      listOfRestaurants.filter((restaurant) => restaurant.info.avgRating > 4)
     );
   };
+
+  const onlineStatus = useOnlineStatus();
+
+  if (!onlineStatus) {
+    return <h1>Looks like you're offline!! Please check your internet connection.</h1>;
+  }
 
   return listOfRestaurants.length === 0 ? (
     <Shimmer />

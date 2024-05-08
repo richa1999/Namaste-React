@@ -9,7 +9,15 @@ class UserClass extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this.props.name + "Child ComponentDidMount");
+    console.log(this.props.name + "Child ComponentDidMount");
+  }
+
+  componentDidUpdate() {
+    console.log(this.props.name + "Child ComponentDidUpdate");
+  }
+
+  componentWillUnmount() {
+    console.log(this.props.name + "Child ComponentWillUnmount");
   }
   render() {
     // console.log(this.props.name + "Child Render");
