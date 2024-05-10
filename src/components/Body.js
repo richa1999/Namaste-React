@@ -41,22 +41,27 @@ const Body = () => {
   const onlineStatus = useOnlineStatus();
 
   if (!onlineStatus) {
-    return <h1>Looks like you're offline!! Please check your internet connection.</h1>;
+    return (
+      <h1>
+        Looks like you're offline!! Please check your internet connection.
+      </h1>
+    );
   }
 
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter-container">
-        <div className="search">
+      <div className="filter-container flex">
+        <div className="search m-4 p-4 space-x-2">
           <input
             type="text"
-            className="search-box"
+            className="search-box border border-solid border-gray-400 ml-4"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
           <button
+            className="px-4 bg-blue-100 border-2 border-blue-400 rounded-xl"
             onClick={() => {
               const filerRestaurants = listOfRestaurants.filter((restaurant) =>
                 restaurant.info.name
@@ -71,17 +76,23 @@ const Body = () => {
             Search
           </button>
         </div>
-        <button className="filter" onClick={onClickHandler}>
-          Top Rated Restaurants
-        </button>
+        <div className="m-4 p-4">
+          <button
+            className="px-4 filter bg-blue-100 border-2 border-blue-400 rounded-xl"
+            onClick={onClickHandler}
+          >
+            Top Rated Restaurants
+          </button>
+        </div>
       </div>
-      <div className="restaurant">
+      <div className="restaurant flex flex-wrap">
         {filerRestaurants.map((restaurant) => {
           return (
-            <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}>
-              <RestaurantCard
-                restaurant={restaurant}
-              />
+            <Link
+              key={restaurant.info.id}
+              to={"/restaurants/" + restaurant.info.id}
+            >
+              <RestaurantCard restaurant={restaurant} />
             </Link>
           );
         })}

@@ -9,23 +9,23 @@ const Header = () => {
     const onlineStatus = useOnlineStatus();
 
     return (
-        <div className="header">
-            <div className="logo-container">
+        <div className="flex justify-between shadow-lg bg-yellow-400">
+            <div>
                 <img
                     src={LOGO_URL}
-                    className="logo"
+                    className="w-30 h-20 bg-yellow-100"
                 />
             </div>
-            <div className="nav-bar">
-                <ul>
-                    <li>OnlineStatus: {onlineStatus ? '🟢' : '🔴'}</li>
-                    <li><Link to='/'>Home</Link></li>
-                    <li><Link to='/about'>About</Link></li>
-                    <li>Order</li>
-                    <li><Link to='/contact'>Contact</Link></li>
-                    <li><Link to='/grocery'>Grocery</Link></li>
-                    <li>Cart</li>
-                    <button className="login" onClick={() => {
+            <div className="flex items-center">
+                <ul className='flex p-4 m-4'>
+                    <li className='px-4'>OnlineStatus: {onlineStatus ? '🟢' : '🔴'}</li>
+                    <li className='px-4'><Link to='/'>Home</Link></li>
+                    <li className='px-4'><Link to='/about'>About</Link></li>
+                    <li className='px-4'>Order</li>
+                    <li className='px-4'><Link to='/contact'>Contact</Link></li>
+                    <li className='px-4'><Link to='/grocery'>Grocery</Link></li>
+                    <li className='px-4'>Cart</li>
+                    <button className="px-4" onClick={() => {
                         btnLogin === "Login" ? setbtnLogin("Logout") : setbtnLogin("Login")
                     }}>{btnLogin}</button>
                 </ul>
