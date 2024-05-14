@@ -1,4 +1,4 @@
-import {lazy, Suspense} from "react";
+import {lazy, Suspense, useState, useEffect} from "react";
 import ReactDOM from "react-dom";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -8,13 +8,27 @@ import ContactPage from "./components/ContactPage";
 import ErrorPage from "./components/ErrorPage";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Shimmer from "./components/Shimmer";
+import UserContext from "./utils/UserContext";
 
 const AppLayout = () => {
+  const [username, setusername] = useState();
+
+  // authentication
+  useEffect(() => {
+    //Make an api call and send username and password
+
+    const data = {
+      name: "Richa ",
+    }
+    setusername(data.name);
+  }, []);
   return (
+    <UserContext.Provider value={{ loggedInUser: username, setusername }}>
     <div className="app">
       <Header />
       <Outlet />
     </div>
+    </UserContext.Provider>
   );
 };
 

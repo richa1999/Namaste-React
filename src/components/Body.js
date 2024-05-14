@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import RestaurantCard from "./RestaurantCard";
+import React, { useState, useEffect, useContext } from "react";
+import RestaurantCard, { withOfferCard } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 // Whenever state variables update, react triggers a reconcilition cycle(re-renders the component)
 const Body = () => {
@@ -17,6 +18,10 @@ const Body = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  console.log(listOfRestaurants);
+
+  const RestaurantCardWithOffer = withOfferCard(RestaurantCard);
 
   const fetchData = async () => {
     const response = await fetch(
@@ -47,6 +52,8 @@ const Body = () => {
       </h1>
     );
   }
+
+  const {loggedInUser, setusername} = useContext(UserContext);
 
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
@@ -84,6 +91,9 @@ const Body = () => {
             Top Rated Restaurants
           </button>
         </div>
+        <div className="m-4 p-4">
+          <input className="border border-solid border-gray-400" type="text" value={loggedInUser} onChange={(e) => setusername(e.target.value)} />
+        </div>
       </div>
       <div className="restaurant flex flex-wrap">
         {filerRestaurants.map((restaurant) => {
@@ -92,7 +102,11 @@ const Body = () => {
               key={restaurant.info.id}
               to={"/restaurants/" + restaurant.info.id}
             >
-              <RestaurantCard restaurant={restaurant} />
+              {((restaurant.info.aggregatedDiscountInfoV3 && restaurant.info.aggregatedDiscountInfoV3.length != 0) || (restaurant.info.aggregatedDiscountInfoV2 && restaurant.info.aggregatedDiscountInfoV2.length) != 0) ? (
+                <RestaurantCardWithOffer restaurant={restaurant} />
+              ) : (
+                <RestaurantCard restaurant={restaurant} />
+              )}
             </Link>
           );
         })}
