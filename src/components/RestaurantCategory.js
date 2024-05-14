@@ -18,7 +18,7 @@ const RestaurantCategory = ({ data, showItems, setShowItems }) => {
               <span>⬇️</span>
             </div>
     
-            {showItems && <ItemList items={data.itemCards} />}
+            {showItems && <ItemList items={data.itemCards} buttonText={"➕Add"}/>}
           </div>
         </div>
       );

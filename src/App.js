@@ -9,6 +9,9 @@ import ErrorPage from "./components/ErrorPage";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Shimmer from "./components/Shimmer";
 import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./components/Cart";
 
 const AppLayout = () => {
   const [username, setusername] = useState();
@@ -23,12 +26,14 @@ const AppLayout = () => {
     setusername(data.name);
   }, []);
   return (
+    <Provider store={appStore}>
     <UserContext.Provider value={{ loggedInUser: username, setusername }}>
     <div className="app">
       <Header />
       <Outlet />
     </div>
     </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -60,6 +65,10 @@ const appRouter = createBrowserRouter([
         path: "/restaurants/:resId",
         element: <RestaurantMenu />,
       },
+      {
+        path: "/cart",
+        element: <Cart />
+      }
     ],
     errorElement: <ErrorPage />,
   },
