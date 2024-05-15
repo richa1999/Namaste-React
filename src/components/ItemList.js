@@ -2,16 +2,10 @@ import { MENU_ITEM_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../utils/cartSlice";
 
-const ItemList = ({ items, buttonText }) => {
-  const dispatch = useDispatch();
-
-  // dispatching an action to add an item to the cart
-  const handleClick = (item) => {
-    dispatch(addToCart(item));
-  };
+const ItemList = ({ items, buttonText, handleClick }) => {
   console.log(items.length);
   return items.map((item) => (
-    <div className="w-full shadow-2xl text-left rounded-2xl border border-solid flex justify-between">
+    <div data-testid='food-items' className="w-full shadow-2xl text-left rounded-2xl border border-solid flex justify-between">
       <div className="p-10">
         {item.card.info.name}
         <p className="text-sm font-bold">

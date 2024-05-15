@@ -8,7 +8,7 @@ const RestaurantCard = (props) => {
     restaurant?.info;
 
   return (
-    <div className="restaurant-card m-4 p-4 w-[250px] hover:shadow-lg cursor-pointer">
+    <div data-testid='resCard' className="restaurant-card m-4 p-4 w-[250px] hover:shadow-lg cursor-pointer">
       <img
         className="res-logo w-52 h-52 rounded-lg box-border shadow-inner shadow-black"
         alt="res-logo"

@@ -1,7 +1,14 @@
-import {useState} from "react";
 import ItemList from "./ItemList";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../utils/cartSlice";
 
 const RestaurantCategory = ({ data, showItems, setShowItems }) => {
+    const dispatch = useDispatch();
+
+    // dispatching an action to add an item to the cart
+   const handleAddClick = (item) => {
+      dispatch(addToCart(item));
+    };
     const handleClick = () => {
         setShowItems();
       };
@@ -18,7 +25,7 @@ const RestaurantCategory = ({ data, showItems, setShowItems }) => {
               <span>⬇️</span>
             </div>
     
-            {showItems && <ItemList items={data.itemCards} buttonText={"➕Add"}/>}
+            {showItems && <ItemList items={data.itemCards} buttonText={"➕Add"} handleClick={handleAddClick}/>}
           </div>
         </div>
       );

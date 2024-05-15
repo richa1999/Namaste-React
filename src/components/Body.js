@@ -19,7 +19,6 @@ const Body = () => {
     fetchData();
   }, []);
 
-  console.log(listOfRestaurants);
 
   const RestaurantCardWithOffer = withOfferCard(RestaurantCard);
 
@@ -66,6 +65,7 @@ const Body = () => {
             className="search-box border border-solid border-gray-400 ml-4"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+            data-testid="search-input"
           />
           <button
             className="px-4 bg-blue-100 border-2 border-blue-400 rounded-xl"

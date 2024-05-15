@@ -15,7 +15,6 @@ const Header = () => {
     // subscribe to the store
     // use selector carefully as it can cause performance issues if not selecting required portion of the store.
     const cartItems = useSelector((store) => store.cart.cartItems);
-    console.log(cartItems)
 
     return (
         <div className="flex justify-between shadow-lg bg-yellow-400">
