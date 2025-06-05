@@ -1,24 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
 import RestaurantCard, { withOfferCard } from "./RestaurantCard";
-import Shimmer from "./Shimmer";
+import Shimmer from "./ShimmerCard";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
 
-// Whenever state variables update, react triggers a reconcilition cycle(re-renders the component)
 const Body = () => {
-  // hooks should be called at the top level of the component
-  // hooks should always be put inside the body and not inside any if-else block or outside the component
   const [listOfRestaurants, setListRestaurants] = useState([]);
   const [filerRestaurants, setFilerRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
-  // if no dependecy array is provided, useEffect will run on every render
-  // if empty array is provided, useEffect will run only once at initial render
-  // if some state variable is provided, useEffect will run whenever that state variable changes
+  const [showTopRatedOnly, setShowTopRatedOnly] = useState(false);
+
   useEffect(() => {
     fetchData();
   }, []);
-
 
   const RestaurantCardWithOffer = withOfferCard(RestaurantCard);
 
@@ -27,89 +22,103 @@ const Body = () => {
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6460176&lng=77.3695166&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const data = await response.json();
-    console.log(data);
-    setListRestaurants(
-      data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    setFilerRestaurants(
-      data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
+    const restaurants =
+      data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
+    setListRestaurants(restaurants);
+    setFilerRestaurants(restaurants);
   };
 
-  const onClickHandler = () => {
-    setFilerRestaurants(
-      listOfRestaurants.filter((restaurant) => restaurant.info.avgRating > 4)
+  const toggleTopRated = () => {
+  const newToggleState = !showTopRatedOnly;
+  setShowTopRatedOnly(newToggleState);
+
+  if (newToggleState) {
+    const topRated = listOfRestaurants.filter(
+      (restaurant) => restaurant.info.avgRating > 4
     );
-  };
+    setFilerRestaurants(topRated);
+  } else {
+    setFilerRestaurants(listOfRestaurants);
+  }
+};
+
 
   const onlineStatus = useOnlineStatus();
 
   if (!onlineStatus) {
     return (
-      <h1>
-        Looks like you're offline!! Please check your internet connection.
+      <h1 className="text-center text-red-500 text-xl mt-6">
+        Looks like you're offline! Please check your internet connection.
       </h1>
     );
   }
 
-  const {loggedInUser, setusername} = useContext(UserContext);
-
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
-    <div className="body">
-      <div className="filter-container flex">
-        <div className="search m-4 p-4 space-x-2">
+    <div className="px-4 md:px-10 py-6 max-w-screen-xl mx-auto">
+      {/* Filter/Search */}
+      <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
+        {/* Search */}
+        <div className="flex gap-2 w-full md:w-auto">
           <input
             type="text"
-            className="search-box border border-solid border-gray-400 ml-4"
+            placeholder="Search restaurants..."
+            className="border border-gray-300 rounded-md px-4 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-orange-400"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             data-testid="search-input"
           />
           <button
-            className="px-4 bg-blue-100 border-2 border-blue-400 rounded-xl"
-            onClick={() => {
-              const filerRestaurants = listOfRestaurants.filter((restaurant) =>
-                restaurant.info.name
-                  .toLowerCase()
-                  .includes(searchText.toLowerCase())
-              );
-              filerRestaurants.length !== 0
-                ? setFilerRestaurants(filerRestaurants)
-                : setFilerRestaurants(listOfRestaurants);
-            }}
+            className="bg-orange-400 text-white px-4 py-2 rounded-md hover:bg-orange-500 transition"
+           onClick={() => {
+            const filtered = listOfRestaurants.filter((restaurant) =>
+              restaurant.info.name
+                .toLowerCase()
+                .includes(searchText.toLowerCase())
+            );
+
+            setFilerRestaurants(filtered.length ? filtered : listOfRestaurants);
+            setSearchText(""); // 🔁 Reset the input
+          }}
           >
             Search
           </button>
         </div>
-        <div className="m-4 p-4">
+
           <button
-            className="px-4 filter bg-blue-100 border-2 border-blue-400 rounded-xl"
-            onClick={onClickHandler}
+            className={`px-4 py-2 rounded-md text-white transition ${
+              showTopRatedOnly ? "bg-green-600" : "bg-green-400"
+            }`}
+            onClick={toggleTopRated}
           >
-            Top Rated Restaurants
+            {showTopRatedOnly ? "Show All Restaurants" : "Show Top Rated Only"}
           </button>
-        </div>
-        <div className="m-4 p-4">
-          <input className="border border-solid border-gray-400" type="text" value={loggedInUser} onChange={(e) => setusername(e.target.value)} />
-        </div>
+       
+        {/* <input
+          className="border border-gray-300 px-4 py-2 rounded-md w-full md:w-auto focus:outline-none"
+          type="text"
+          value={loggedInUser}
+          onChange={(e) => setusername(e.target.value)}
+        /> */}
       </div>
-      <div className="restaurant flex flex-wrap">
-        {filerRestaurants.map((restaurant) => {
-          return (
-            <Link
-              key={restaurant.info.id}
-              to={"/restaurants/" + restaurant.info.id}
-            >
-              {((restaurant.info.aggregatedDiscountInfoV3 && restaurant.info.aggregatedDiscountInfoV3.length != 0) || (restaurant.info.aggregatedDiscountInfoV2 && restaurant.info.aggregatedDiscountInfoV2.length) != 0) ? (
-                <RestaurantCardWithOffer restaurant={restaurant} />
-              ) : (
-                <RestaurantCard restaurant={restaurant} />
-              )}
-            </Link>
-          );
-        })}
+
+      {/* Restaurant Cards */}
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {filerRestaurants.map((restaurant) => (
+          <Link
+            key={restaurant.info.id}
+            to={"/restaurants/" + restaurant.info.id}
+            className="block transform hover:scale-[1.02] transition duration-200"
+          >
+            {(restaurant.info.aggregatedDiscountInfoV3 ||
+              restaurant.info.aggregatedDiscountInfoV2) ? (
+              <RestaurantCardWithOffer restaurant={restaurant} />
+            ) : (
+              <RestaurantCard restaurant={restaurant} />
+            )}
+          </Link>
+        ))}
       </div>
     </div>
   );

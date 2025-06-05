@@ -6,41 +6,85 @@ import UserContext from '../utils/UserContext';
 import { useSelector } from 'react-redux';
 
 const Header = () => {
-    const [btnLogin, setbtnLogin] = useState("Login")
+  const [btnLogin, setbtnLogin] = useState("Login");
+  const onlineStatus = useOnlineStatus();
+  const { loggedInUser } = useContext(UserContext);
+  const cartItems = useSelector((store) => store.cart.cartItems);
 
-    const onlineStatus = useOnlineStatus();
+  return (
+    <header className="flex justify-between items-center bg-yellow-400 shadow-md px-6 py-3">
+      <div>
+        <img
+          src={LOGO_URL}
+          alt="logo"
+          className="w-32 h-20 object-contain bg-yellow-100 rounded-md"
+        />
+      </div>
 
-    const {loggedInUser} = useContext(UserContext);
-
-    // subscribe to the store
-    // use selector carefully as it can cause performance issues if not selecting required portion of the store.
-    const cartItems = useSelector((store) => store.cart.cartItems);
-
-    return (
-        <div className="flex justify-between shadow-lg bg-yellow-400">
-            <div>
-                <img
-                    src={LOGO_URL}
-                    className="w-30 h-20 bg-yellow-100"
-                />
-            </div>
-            <div className="flex items-center">
-                <ul className='flex p-4 m-4'>
-                    <li className='px-4'>OnlineStatus: {onlineStatus ? '🟢' : '🔴'}</li>
-                    <li className='px-4'><Link to='/'>Home</Link></li>
-                    <li className='px-4'><Link to='/about'>About</Link></li>
-                    <li className='px-4'>Order</li>
-                    <li className='px-4'><Link to='/contact'>Contact</Link></li>
-                    <li className='px-4'><Link to='/grocery'>Grocery</Link></li>
-                    <li className='px-4 font-bold'><Link to='/cart'>Cart - {cartItems.length} items</Link></li>
-                    <button className="px-4" onClick={() => {
-                        btnLogin === "Login" ? setbtnLogin("Logout") : setbtnLogin("Login")
-                    }}>{btnLogin}</button>
-                    <li className='px-4 font-bold'>{loggedInUser}</li>
-                </ul>
-            </div>
-        </div>
-    )
-}
+      <nav>
+        <ul className="flex items-center space-x-6 text-gray-900 font-semibold">
+          <li className="flex items-center space-x-1">
+            <span>Online Status:</span>
+            <span className={onlineStatus ? "text-green-600" : "text-red-600"}>
+              {onlineStatus ? "🟢" : "🔴"}
+            </span>
+          </li>
+          <li>
+            <Link
+              to="/"
+              className="hover:text-yellow-700 transition-colors duration-200"
+            >
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/about"
+              className="hover:text-yellow-700 transition-colors duration-200"
+            >
+              About
+            </Link>
+          </li>
+          <li className="cursor-default select-none text-gray-700">Order</li>
+          <li>
+            <Link
+              to="/contact"
+              className="hover:text-yellow-700 transition-colors duration-200"
+            >
+              Contact
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/grocery"
+              className="hover:text-yellow-700 transition-colors duration-200"
+            >
+              Grocery
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/cart"
+              className="font-bold hover:text-yellow-800 transition-colors duration-200"
+            >
+              Cart - {cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}
+            </Link>
+          </li>
+          <li>
+            <button
+              onClick={() =>
+                btnLogin === "Login" ? setbtnLogin("Logout") : setbtnLogin("Login")
+              }
+              className="px-4 py-2 rounded-md bg-yellow-600 text-white font-semibold hover:bg-yellow-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+            >
+              {btnLogin}
+            </button>
+          </li>
+          <li className="font-bold text-gray-900 select-none">{loggedInUser}</li>
+        </ul>
+      </nav>
+    </header>
+  );
+};
 
 export default Header;
