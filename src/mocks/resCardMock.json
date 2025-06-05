@@ -1,0 +1,77 @@
+{
+  "info": {
+    "id": "619113",
+    "name": "EatFit",
+    "cloudinaryImageId": "RX_THUMBNAIL/IMAGES/VENDOR/2024/4/2/b83bc9a8-67dd-4e65-8738-47d72a7d9507_619113.JPG",
+    "locality": "Vasundhara Colony",
+    "areaName": "Ghaziabad",
+    "costForTwo": "₹270 for two",
+    "cuisines": [
+      "Chinese",
+      "Healthy Food",
+      "Tandoor",
+      "Pizzas",
+      "North Indian",
+      "Thalis",
+      "Biryani"
+    ],
+    "avgRating": 4.4,
+    "parentId": "76139",
+    "avgRatingString": "4.4",
+    "totalRatingsString": "1K+",
+    "sla": {
+      "deliveryTime": 28,
+      "lastMileTravel": 3.9,
+      "serviceability": "SERVICEABLE",
+      "slaString": "25-30 mins",
+      "lastMileTravelString": "3.9 km",
+      "iconType": "ICON_TYPE_EMPTY"
+    },
+    "availability": {
+      "nextCloseTime": "2024-05-16 00:00:00",
+      "opened": true
+    },
+    "badges": {
+      "imageBadges": [
+        {
+          "imageId": "Rxawards/_CATEGORY-Guiltfree.png",
+          "description": "Delivery!"
+        }
+      ]
+    },
+    "isOpen": true,
+    "type": "F",
+    "badgesV2": {
+      "entityBadges": {
+        "imageBased": {
+          "badgeObject": [
+            {
+              "attributes": {
+                "description": "Delivery!",
+                "imageId": "Rxawards/_CATEGORY-Guiltfree.png"
+              }
+            }
+          ]
+        },
+        "textBased": {},
+        "textExtendedBadges": {}
+      }
+    },
+    "aggregatedDiscountInfoV3": {
+      "header": "₹125 OFF",
+      "subHeader": "ABOVE ₹249",
+      "discountTag": "FLAT DEAL"
+    },
+    "differentiatedUi": {
+      "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
+      "differentiatedUiMediaDetails": {
+        "mediaType": "ADS_MEDIA_ENUM_IMAGE",
+        "lottie": {},
+        "video": {}
+      }
+    },
+    "reviewsSummary": {},
+    "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
+    "restaurantOfferPresentationInfo": {}
+  }
+}
